@@ -6,35 +6,39 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 
 
-def asr_google_api(audio_file_path):
-    """
+class GoogleASR:
+    def __init__(self):
+        pass
 
-    :param audio_file_path: must be mono channel
-    :return:
-    """
-    # Instantiates a client
-    client = speech.SpeechClient()
+    def __call__(self, *args, **kwargs):
+        return self.process(*args, **kwargs)
 
-    # Loads the audio into memory
-    with io.open(audio_file_path, 'rb') as audio_file:
-        content = audio_file.read()
-        audio = types.RecognitionAudio(content=content)
+    def process(self, audio_file_path=None, *args, **kwargs):
+        """
+        process single-channel voice signal and return text
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        # Instantiates a client
+        client = speech.SpeechClient()
 
-    config = types.RecognitionConfig(
-        encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
-        # sample_rate_hertz=44100,
-        language_code='en-US')
+        # Loads the audio into memory
+        with io.open(audio_file_path, 'rb') as audio_file:
+            content = audio_file.read()
+            audio = types.RecognitionAudio(content=content)
 
-    # Detects speech in the audio file
-    response = client.recognize(config, audio)
+        config = types.RecognitionConfig(
+            encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
+            # sample_rate_hertz=44100,
+            language_code='en-US')
 
-    outputs = []
-    for result in response.results:
-        print('Transcript: {}'.format(result.alternatives[0].transcript))
-        outputs.append(result.alternatives[0].transcript)
+        # Detects speech in the audio file
+        response = client.recognize(config, audio)
 
-    return outputs
+        outputs = []
+        for result in response.results:
+            print('Transcript: {}'.format(result.alternatives[0].transcript))
+            outputs.append(result.alternatives[0].transcript)
 
-
-if __name__ == '__main__':
-    asr_google_api('/home/hung/tmp/2/84-121123-0001-1.wav')
+        return outputs

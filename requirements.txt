@@ -1,2 +1,8 @@
+SpeechRecognition
+pocketsphinx
 pyaudio
 google-cloud-speech
+google-cloud-texttospeech
+pygame
+sounddevice
+playsound
