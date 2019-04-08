@@ -7,8 +7,8 @@ from google.cloud.speech import types
 
 
 class GoogleASR:
-    def __init__(self):
-        pass
+    def __init__(self, language_code='en-US', **kwargs):
+        self.language_code = language_code
 
     def __call__(self, *args, **kwargs):
         return self.process(*args, **kwargs)
@@ -31,7 +31,7 @@ class GoogleASR:
         config = types.RecognitionConfig(
             encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
             # sample_rate_hertz=44100,
-            language_code='en-US')
+            language_code=self.language_code)
 
         # Detects speech in the audio file
         response = client.recognize(config, audio)
