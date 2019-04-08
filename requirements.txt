@@ -6,3 +6,7 @@ google-cloud-texttospeech
 pygame
 sounddevice
 playsound
+numpy
+google-cloud-translate==1.4.0
+google-cloud-storage==1.14.0
+pycountry==18.12.8
