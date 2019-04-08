@@ -8,6 +8,7 @@ class GoogleTTS:
         self.ssml_gender = kwargs.get('voice_gender', texttospeech.enums.SsmlVoiceGender.MALE)
         self.audio_encoding = kwargs.get('audio_encoding', texttospeech.enums.AudioEncoding.MP3)
         self.outfile = None
+        self.language_code = kwargs.get('language_code', 'en-US')
 
     def __call__(self, text="this is test", outfile=None, *args, **kwargs):
         return self.process(text=text, outfile=outfile, *args, **kwargs)
@@ -26,7 +27,7 @@ class GoogleTTS:
         synthesis_input = texttospeech.types.SynthesisInput(text=text)
 
         # Build the voice request, select the language code ("en-US")
-        voice = texttospeech.types.VoiceSelectionParams(language_code='en-US', ssml_gender=self.ssml_gender)
+        voice = texttospeech.types.VoiceSelectionParams(language_code=self.language_code, ssml_gender=self.ssml_gender)
 
         # Select the type of audio file you want returned
         audio_config = texttospeech.types.AudioConfig(audio_encoding=self.audio_encoding)
