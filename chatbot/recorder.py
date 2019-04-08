@@ -18,11 +18,6 @@ class SimpleRecorder:
                      record_seconds=5):
         p = pyaudio.PyAudio()
 
-        stream = p.open(format=f_format,
-                        channels=channels,
-                        rate=rate,
-                        input=True,
-                        frames_per_buffer=chunk)
         for i in range(3, 0, -1):
             print('recording starting on {}s'.format(i))
             time.sleep(1)
@@ -31,6 +26,11 @@ class SimpleRecorder:
 
         frames = []
 
+        stream = p.open(format=f_format,
+                        channels=channels,
+                        rate=rate,
+                        input=True,
+                        frames_per_buffer=chunk)
         for i in range(0, int(rate / chunk * record_seconds)):
             data = stream.read(chunk)
             frames.append(data)

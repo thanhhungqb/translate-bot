@@ -1,3 +1,5 @@
+from google.cloud.texttospeech_v1.gapic.enums import SsmlVoiceGender
+
 from chatbot.asr import GoogleASR
 from chatbot.player import SimplePlayer, PlayerAutostop
 from chatbot.recorder import FromFileRecorder, SimpleRecorder
@@ -17,7 +19,7 @@ class SimpleBot:
         recorder = SimpleRecorder()
         # recorder = FromFileRecorder(file_path='/home/hung/tmp/2/84-121123-0001-1.wav')
         asr = GoogleASR()
-        tts = GoogleTTS(voice_gender=1)
+        tts = GoogleTTS(voice_gender=SsmlVoiceGender.FEMALE)
         player = SimplePlayer()
         # player = PlayerAutostop()
 
