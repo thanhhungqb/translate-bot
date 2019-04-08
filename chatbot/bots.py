@@ -43,7 +43,7 @@ class TranslateBot:
     def __init__(self, **kwargs):
         self.config = {
             'asr_lang': kwargs.get('asr_lang', 'en'),
-            'tran_source_lang': kwargs.get('asr_lang', 'en'),
+            'tran_source_lang': kwargs.get('tran_source_lang', 'en'),
             'tran_target_lang': kwargs.get('tran_target_lang', 'ko'),
             'tts_lang': kwargs.get('tts_lang', 'ko-KR'),  # en-US ko-KR
             'tts_gender': kwargs.get('tts_gender', SsmlVoiceGender.FEMALE)
@@ -56,8 +56,11 @@ class TranslateBot:
         audio_file = kwargs.get('path', '/tmp/84-121123-0001-1.wav')
 
         recorder = SimpleRecorder()
-        # recorder = FromFileRecorder(file_path='/home/hung/tmp/2/84-121123-0001-1.wav')
-        asr = GoogleASR()
+        if kwargs.get('asr_from_file', False):
+            # for testing only with voice from file
+            recorder = FromFileRecorder(file_path=audio_file)
+
+        asr = GoogleASR(language_code=self.config['asr_lang'])
         tts = GoogleTTS(voice_gender=SsmlVoiceGender.FEMALE)
         player = SimplePlayer()
         # player = PlayerAutostop()
