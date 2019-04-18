@@ -50,6 +50,76 @@ class SimpleRecorder:
         return audio_output_filename
 
 
+class StreamingRecorder:
+    def __init__(self, chunk=1024,
+                 f_format=pyaudio.paInt16, channels=1, rate=44100,
+                 max_length_sec=60, *args, **kwargs):
+        self.chunk, self.rate = chunk, rate
+        self.f_format = f_format
+        self.channels = channels
+        self.max_length_sec = max_length_sec
+
+        self.frames = []
+        self.is_stopped = True
+        self.stream = None
+        self.p = None
+        self.sample_size = 0
+
+    def __call__(self, *args, **kwargs):
+        return self.record_generator(*args, **kwargs)
+
+    def __del__(self):
+        self.stop()
+
+    def record_generator(self):
+        print("* recording")
+        self.p = pyaudio.PyAudio()
+
+        self.sample_size = self.p.get_sample_size(self.f_format)
+
+        self.stream = self.p.open(format=self.f_format,
+                                  channels=self.channels,
+                                  rate=self.rate,
+                                  input=True,
+                                  frames_per_buffer=self.chunk)
+        self.is_stopped = False
+        for i in range(0, int(self.rate / self.chunk * self.max_length_sec)):
+            data = self.stream.read(self.chunk)
+            self.frames.append(data)
+            yield data
+
+        print("* done recording")
+        self.stop()
+
+        raise StopIteration
+
+    def stop(self):
+        """
+        Carefully stop recorder stream
+        :return:
+        """
+        if not self.is_stopped:
+            self.stream.stop_stream()
+            self.stream.close()
+            self.p.terminate()
+
+            self.p = None
+            self.stream = None
+            self.is_stopped = True
+
+    def destroy(self):
+        self.stop()
+
+    def save_file(self, audio_output_filename='output.wav'):
+        wf = wave.open(audio_output_filename, 'wb')
+        wf.setnchannels(self.channels)
+        wf.setsampwidth(self.sample_size)
+        wf.setframerate(self.rate)
+        wf.writeframes(b''.join(self.frames))
+        wf.close()
+        return audio_output_filename
+
+
 class FromFileRecorder:
     def __init__(self, file_path):
         self.file_path = file_path
@@ -62,6 +132,7 @@ class XRecorder:
     """
     Credit: https://github.com/Uberi/speech_recognition/blob/master/examples/microphone_recognition.py
     """
+
     def __init__(self):
         pass
 
