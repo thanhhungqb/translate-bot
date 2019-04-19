@@ -1,15 +1,28 @@
 # Information
 This is a simple chatbot
 
+This tool use flowing services from Google:
+
+- Google Speech to Text
+- Google Translate Api
+- Google Text to Speech
+
+You have to register and enable Google Api and get a credentials file to used.
+
 # environment
-export GOOGLE_APPLICATION_CREDENTIALS=...json
+Tested under Ubuntu 18.04
+
+
+    export GOOGLE_APPLICATION_CREDENTIALS=...json
 
 # commands
-add-apt-repository ppa:ubuntuhandbook1/audacity
-
-apt-get install portaudio19-dev python-pyaudio python3-pyaudio python3-gi
-
-install [SWIG](https://launchpad.net/ubuntu/bionic/amd64/swig/3.0.10-1.2)
+    add-apt-repository ppa:ubuntuhandbook1/audacity
+    
+    apt-get install portaudio19-dev python-pyaudio python3-pyaudio python3-gi
+    
+    install [SWIG](https://launchpad.net/ubuntu/bionic/amd64/swig/3.0.10-1.2)
+    
+    apt install mpg321
 
 # Tools
 audacity
