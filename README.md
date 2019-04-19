@@ -1,4 +1,5 @@
 # Information
+
 This is a simple chatbot
 
 This tool use flowing services from Google:
@@ -9,6 +10,10 @@ This tool use flowing services from Google:
 
 You have to register and enable Google Api and get a credentials file to used.
 
+run command:
+
+    python -m chatbot.demoTranslateBot
+    
 # environment
 Tested under Ubuntu 18.04
 
