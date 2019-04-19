@@ -4,7 +4,7 @@ from chatbot.bots import TranslateBot, TranslateBotStreaming
 
 
 def demo_streaming():
-    pair = 'vi-ko'
+    pair = 'en-ko'
     with open('config/{}.json'.format(pair)) as f:
         config = json.load(f)
 

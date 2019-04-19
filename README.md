@@ -14,6 +14,8 @@ run command:
 
     python -m chatbot.demoTranslateBot
     
+The default language to translate is English-Korean, see line 7 of demoTranslateBot "en-ko". To change language pair make a new
+file in config folder and add, so change line 7 to this configure name. See some configure file to make sure use correct params. 
 # environment
 Tested under Ubuntu 18.04
 
