@@ -1,10 +1,19 @@
 import json
 
-from chatbot.bots import TranslateBot
+from chatbot.bots import TranslateBot, TranslateBotStreaming
+
+
+def demo_streaming():
+    pair = 'vi-ko'
+    with open('config/{}.json'.format(pair)) as f:
+        config = json.load(f)
+
+    bot = TranslateBotStreaming(**config)
+    bot(path='x_{}.wav'.format(pair))
 
 
 def main():
-    pair = 'en-ko'
+    pair = 'vi-ko'
     with open('config/{}.json'.format(pair)) as f:
         config = json.load(f)
 
@@ -13,4 +22,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    demo_streaming()

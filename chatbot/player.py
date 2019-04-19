@@ -1,5 +1,7 @@
+import os
 import time
 
+import pygame
 from playsound import playsound
 from pygame import mixer, sndarray
 
@@ -9,13 +11,27 @@ class SimplePlayer:
         mixer.init()
 
     def __call__(self, *args, **kwargs):
-        self.play(*args, **kwargs)
+        self.play3(*args, **kwargs)
 
     def play(self, *args, **kwargs):
         file_path = kwargs.get('file_path', '/tmp/0.mp3')
         mixer.music.load(file_path)
         mixer.music.play()
         time.sleep(5)
+
+    def play2(self, *args, **kwargs):
+        pygame.mixer.pre_init(44100, 16, 2, 4096)  # frequency, size, channels, buffersize
+        pygame.init()
+
+        file_path = kwargs.get('file_path', '/tmp/0.mp3')
+        sound = pygame.mixer.Sound(file_path)
+        sound_len = sound.get_length()
+        sound.play()
+        time.sleep(round(sound_len))
+
+    def play3(self, *args, **kwargs):
+        file_path = kwargs.get('file_path', '/tmp/0.mp3')
+        os.system("mpg123 " + file_path)
 
 
 class PlayerAutostop:
