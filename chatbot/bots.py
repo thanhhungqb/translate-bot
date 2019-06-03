@@ -110,7 +110,6 @@ class TranslateBotStreaming:
 
         while True:
             gsasr = GoogleStreamASR(language_code=self.config['asr_lang'])
-
             for results in gsasr():
                 print(results)
                 for result in results:
@@ -123,7 +122,7 @@ class TranslateBotStreaming:
                         print(u'Transcript: {}'.format(alternative.transcript))
                         transcript = alternative.transcript
 
-                        if transcript.upper() == 'STOP':
+                        if transcript.upper().strip() == 'STOP':
                             return None
 
                         text = translator(transcript)
@@ -131,4 +130,4 @@ class TranslateBotStreaming:
                         player(file_path=tts.outfile)
                         # TODO stop gsasr and continue while
                         # gsasr.destroy()
-                        continue
+                        break
