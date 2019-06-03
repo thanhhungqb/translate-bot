@@ -1,5 +1,5 @@
 SpeechRecognition
-pocketsphinx
+# pocketsphinx
 pyaudio
 google-cloud-speech
 google-cloud-texttospeech
